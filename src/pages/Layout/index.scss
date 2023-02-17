@@ -1,0 +1,12 @@
+.layout{
+        // padding: 0 50px;
+    .ant-menu-overflow{
+        padding: 0 60px;
+        .ant-menu-overflow-item{
+            &:nth-child(5){
+                position: absolute;
+                right: 4%;
+            }
+        }
+    }
+}
