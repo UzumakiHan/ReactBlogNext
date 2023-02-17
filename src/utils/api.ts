@@ -3,6 +3,9 @@ import {ajax} from './http'
 const BASE_URL = '/api';
 //登录
 export const reqLogin = (username:string,password:string)=>ajax(BASE_URL+'/reqlogin',{username,password});
+//注册
+export const reqRegister = (username:string,password:string)=>ajax(BASE_URL+'/reqregister',{username,password},'POST')
+
 //获取用户信息
 export const getUserInfo = (id:number)=>ajax(BASE_URL+'/getinfobyid',{id},'POST');
 //获取所以文章

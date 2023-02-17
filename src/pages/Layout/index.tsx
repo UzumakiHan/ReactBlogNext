@@ -1,9 +1,10 @@
-import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom'
+import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { Menu, Avatar, Layout } from 'antd';
 import type { MenuProps } from 'antd';
 import { useState, useEffect } from 'react'
 import { observer } from 'mobx-react-lite'
 import { useStore } from '@/store'
+import defaultAvatar from '@/assets/logo.jpg'
 
 import {
     HomeOutlined,
@@ -48,7 +49,7 @@ const hasLogin: MenuItem[] = [
 ]
 const GeekLayout: React.FC = () => {
     const { userStore, loginStore } = useStore()
-    const [current, setCurrent] = useState('/');
+    const [current, setCurrent] = useState<string>('/');
     const [menuList, setMenuList] = useState([
         ...items
     ])
@@ -76,7 +77,7 @@ const GeekLayout: React.FC = () => {
         if (userStore.userInfo.id) {
             setMenuList([
                 ...hasLogin,
-                getItem(userStore.userInfo.username, 'SubMenu', <Avatar src={userStore.userInfo.image} size='small' style={{ marginRight: 6 }} />, [
+                getItem(userStore.userInfo.username, 'SubMenu', <Avatar src={userStore.userInfo.image ? userStore.userInfo.image : defaultAvatar} size='small' style={{ marginRight: 6 }} />, [
                     getItem('我的博客', 'myblog', <BoldOutlined />),
                     getItem('修改密码', 'password', <EditOutlined />),
                     getItem('退出登录', 'logout', <LogoutOutlined />),
@@ -95,10 +96,12 @@ const GeekLayout: React.FC = () => {
     }, [])
     return (
         <div className='layout'>
-            <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={menuList}>
+            <div className='layout-nav' >
+                <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={menuList}>
 
-            </Menu>
-            <Layout style={{ padding: 20 }}>
+                </Menu>
+            </div>
+            <Layout style={{ padding: 20, marginTop: 50 + 'px' }}>
                 {/* 二级路由出口 */}
                 <Outlet />
             </Layout>

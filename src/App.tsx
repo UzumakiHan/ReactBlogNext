@@ -7,6 +7,7 @@ import Publish from '@/pages/Publish'
 import Personal from '@/pages/Personal'
 import MyBlog from '@/pages/MyBlog'
 import Article from '@/pages/Article'
+import NotFound from '@/pages/NotFound'
 
 
 import PassWord from '@/pages/PassWord'
@@ -27,8 +28,8 @@ function App() {
             <Route path='myblog' element={<MyBlog />}></Route>
             <Route path='password' element={<PassWord />}></Route>
             <Route path='article' element={<Article />}></Route>
-
           </Route>
+          <Route path="*" element={<NotFound/>}/>
           <Route path='/login' element={< Login />}></Route>
 
         </Routes>

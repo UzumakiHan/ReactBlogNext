@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './index.scss';
 import { useSearchParams,useNavigate } from 'react-router-dom'
-import moment from 'moment';
+import dayjs from 'dayjs';
 import { useStore } from '@/store'
 import { Row, Col, Card, Calendar, Comment, Avatar, Form, Button, Tag, Input, Tooltip, List, message } from 'antd';
 import {
@@ -12,6 +12,8 @@ import {
     FieldTimeOutlined
 } from '@ant-design/icons'
 import constant from '@/constant';
+import defaultAvatar from '@/assets/logo.jpg'
+
 import {ICommit,ICommitContent,EditorProps,IArticle} from '@/typings'
 import {updateReadCount} from '@/utils/api'
 const Article: React.FC = () => {
@@ -31,7 +33,7 @@ const Article: React.FC = () => {
         title: ''
     })
     const [commentList, setCommitList] = useState([])
-    const [submitting, setSubmitting] = useState(false);
+    const [submitting, setSubmitting] = useState<boolean>(false);
     const { TextArea } = Input;
     const Editor = ({ submitting }: EditorProps) => (
         <Form onFinish={onFinish}>
@@ -50,7 +52,7 @@ const Article: React.FC = () => {
             <span><UserOutlined style={{ marginRight: 4 }} />{currentArticle.author}</span>
             <span><TagOutlined style={{ marginRight: 4 }} /> <Tag color="magenta">{currentArticle.label}</Tag></span>
             <span style={{ marginRight: 4 }}><EyeOutlined style={{ marginRight: 4 }} />{parseInt(currentArticle.readcount) + 1}</span>
-            <span><FieldTimeOutlined style={{ marginRight: 4 }} />{moment(currentArticle.currentime).format('YYYY-MM-DD')}</span>
+            <span><FieldTimeOutlined style={{ marginRight: 4 }} />{dayjs(currentArticle.currentime).format('YYYY-MM-DD')}</span>
         </div>
     )
     const handleGoBack=()=>{
@@ -82,7 +84,7 @@ const Article: React.FC = () => {
     const onFinish = async (values: ICommitContent) => {
         const { author, id } = currentArticle;
         const { image,username, status } =  userStore.userInfo;
-        const commentime = moment().format('YYYY-MM-DD')
+        const commentime = dayjs().format('YYYY-MM-DD')
         const {commitContent}= values
         if(commitContent === '' || 'undefined'){
             message.error('评论不能为空')
@@ -119,7 +121,7 @@ const Article: React.FC = () => {
                             <Card title='评论区'>
                                 {
                                     userStore.userInfo.id ? <Comment
-                                        avatar={<Avatar src={ userStore.userInfo.image} alt="Han Solo" />}
+                                        avatar={<Avatar src={ userStore.userInfo.image?userStore.userInfo.image:defaultAvatar} alt="Han Solo" />}
                                         content={
                                             <Editor
                                                 submitting={submitting}
@@ -148,8 +150,8 @@ const Article: React.FC = () => {
                                                 author={item.tousername}
                                                 avatar={item.blogimg}
                                                 content={item.blogcomment}
-                                                datetime={<Tooltip title={moment(item.commentime).format('YYYY-MM-DD')}>
-                                                    <span>{moment(item.commentime).format('YYYY-MM-DD')}</span>
+                                                datetime={<Tooltip title={dayjs(item.commentime).format('YYYY-MM-DD')}>
+                                                    <span>{dayjs(item.commentime).format('YYYY-MM-DD')}</span>
                                                 </Tooltip>}
                                             />
                                         </li>

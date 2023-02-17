@@ -14,7 +14,7 @@ const About: React.FC = () => {
 
                         <Title level={2}>ReactBlog介绍</Title>
                         <Paragraph>
-                            主要是基础上一版的技术改版，上一版主要是用Class类来编写组件，新版本是基础上一般重新用Hook来编写函数式组件，数据管理也从redux更换成mobx。
+                            主要是基础上一版的技术改版，上一版主要是用Class类来编写组件，新版本是基础上一般重新用Hook来编写函数式组件，使用TS对数据进行约束，数据管理也从redux更换成mobx。
                            
                         </Paragraph>
                         <Paragraph>

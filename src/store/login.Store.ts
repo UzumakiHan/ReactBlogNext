@@ -1,5 +1,5 @@
 import { makeAutoObservable } from 'mobx'
-import { reqLogin } from '@/utils/api';
+import { reqLogin,reqRegister } from '@/utils/api';
 import { setUserId,
     getUserId,
     removeUserId } from '@/utils'
@@ -22,6 +22,19 @@ class LoginStore {
                 resolve(loginRes)
             }
         })
+    };
+    handleRegister=(username: string, password: string)=>{
+        return new Promise(async (resolve, reject) => {
+            const registerRes: any = await reqRegister(username, password);
+            if (registerRes.code === constant.SUCCESS_CODE) {
+                
+                resolve(registerRes)
+            } else {
+                resolve(registerRes)
+            }
+        })
+       
+        
     };
     handleLogout=()=>{
         removeUserId()

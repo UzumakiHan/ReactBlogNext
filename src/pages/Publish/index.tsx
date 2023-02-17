@@ -7,7 +7,7 @@ import { useSearchParams,useNavigate } from 'react-router-dom'
 import { useStore } from '@/store'
 import constant from '@/constant';
 import { publicArticle,editArticle } from '@/utils/api'
-import moment from 'moment';
+import dayjs from 'dayjs';
 import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css'
 import './index.scss';
@@ -34,7 +34,7 @@ const Publish: React.FC = () => {
         const content = modalForm.current.getFieldValue('content') || ''
         const blogTag = modalForm.current.getFieldValue('blogTag') || ''
         const blogType = modalForm.current.getFieldValue('blogType') || ''
-        const currentime = moment().format('YYYY-MM-DD HH:mm:ss');
+        const currentime = dayjs().format('YYYY-MM-DD HH:mm:ss');
         const { username, image } = userStore.userInfo
         if (title === '' || content === '' || blogTag === '' || blogType === '') {
             message.error('请填写全部信息');

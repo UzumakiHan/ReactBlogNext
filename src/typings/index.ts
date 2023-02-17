@@ -35,6 +35,10 @@ export interface ILogin {
     message: string,
     token?:string
 }
+export interface IRegister {
+    code: number,
+    message: string,
+}
 export interface IUserInfo{
     birthday:string,
     image:string,

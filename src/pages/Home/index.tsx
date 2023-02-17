@@ -1,17 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'
-import { Row, Col, Card, Tag, Pagination, Avatar, List, Typography, Divider } from 'antd'
+import { Row, Col, Card, Tag, Pagination, List, Typography } from 'antd'
 import {
   EyeOutlined,
   UserOutlined,
   TagOutlined,
-  EditOutlined,
-  EllipsisOutlined,
-  SettingOutlined
 } from '@ant-design/icons'
 import { observer } from 'mobx-react-lite';
 import { useStore } from '@/store'
-import moment from 'moment';
+import dayjs from 'dayjs';
 import constant from '@/constant';
 import {IArticle} from '@/typings'
 import './index.scss';
@@ -38,14 +35,14 @@ const Home: React.FC = () => {
       <Row>
         <Col span={22} offset={1}>
           <Row>
-            <Col span={17} className='home-blog'>
+            <Col span={17}  className='home-blog'>
               {
                 articleStore.allArticle.map((article: IArticle) => {
                   return (
                     <Card
                       key={article.id}
                       title={article.title}
-                      extra={moment(article.currentime).format('YYYY-MM-DD HH:mm:ss')}
+                      extra={dayjs(article.currentime).format('YYYY-MM-DD HH:mm:ss')}
                       style={{ width: '100%', marginBottom: 8, cursor: 'pointer' }}
                       onClick={()=>handleGoArticle(article)}
 

@@ -14,8 +14,8 @@ import { useNavigate,useSearchParams } from 'react-router-dom'
 import constant from '@/constant'
 import './index.scss';
 import logo from '@/assets/logo.png'
-import React from 'react';
-import {ILoginParams,ILogin} from '@/typings'
+import React, { useState } from 'react';
+import {ILoginParams,ILogin,IRegister} from '@/typings'
 const Item = Form.Item;
 
 const Login:React.FC=()=>{
@@ -24,23 +24,37 @@ const Login:React.FC=()=>{
     const articleId = params.get('id')
     const pageType = params.get('page')
     const { loginStore } = useStore()
+    const [pageStatus,sePageStatus] = useState(true) 
     const onFinish = async (values: ILoginParams) => {
-        const loginRes: ILogin = await loginStore.handleLogin(values.username, values.password)
-        if (loginRes.code === constant.SUCCESS_CODE) {
-            message.success(loginRes.message)
-            if(pageType === 'article'){
-                navigate(`/${pageType}?id=${articleId}`)
-            }else if(pageType === 'publish'){
-                navigate(`/${pageType}`)
+        console.log(1)
+        if(pageStatus){
+            const loginRes: ILogin = await loginStore.handleLogin(values.username, values.password)
+            if (loginRes.code === constant.SUCCESS_CODE) {
+                message.success(loginRes.message)
+                if(pageType === 'article'){
+                    navigate(`/${pageType}?id=${articleId}`)
+                }else if(pageType === 'publish'){
+                    navigate(`/${pageType}`)
+                }
+                else{
+                    navigate('/')
+                }
+               
+            } else {
+                message.error(loginRes.message)
             }
-            else{
-                navigate('/')
+        }else{
+            const registerRes: IRegister = await loginStore.handleRegister(values.username, values.password)
+            if(registerRes.code === constant.SUCCESS_CODE){
+                message.success(registerRes.message)
+            }else{
+                message.error(registerRes.message)
             }
-           
-        } else {
-            message.error(loginRes.message)
         }
 
+    }
+    function handlePageStatus(){
+        sePageStatus(!pageStatus)
     }
     return (
         <div className='login'>
@@ -49,7 +63,7 @@ const Login:React.FC=()=>{
                 <h1>React Blog</h1>
             </header>
             <section className='login-content'>
-                <h3>用户登录</h3>
+                <h3>用户{pageStatus?'登录':'注册'}</h3>
                 <Form
                     onFinish={onFinish}
                     className='login-content-form'>
@@ -73,12 +87,13 @@ const Login:React.FC=()=>{
 
                     </Item>
                     <Item>
-                        <Button type='primary' htmlType='submit' className='login-content-form-button'>登录</Button>
+                        <Button type='primary' htmlType='submit' className='login-content-form-button'>{pageStatus?'登录':'注册'}</Button>
                     </Item>
-                    {/* <Link
+                    <div
                             style={{ textAlign: 'right', width: '100%', display: 'inline-block' }}
+                            onClick={handlePageStatus}
                             
-                        >去</Link> */}
+                        >去{!pageStatus?'登录':'注册'}</div>
                 </Form>
             </section>
         </div>

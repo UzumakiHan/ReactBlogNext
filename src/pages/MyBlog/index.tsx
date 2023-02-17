@@ -12,12 +12,13 @@ import {
     FormOutlined,
     DeleteOutlined
 } from '@ant-design/icons'
-import moment from 'moment';
+import dayjs from 'dayjs';
 import { observer } from 'mobx-react-lite'
 import { useStore } from '@/store'
 import { IArticle } from '@/typings'
 import constant from '@/constant';
 import EditUserModal from '@/components/EditUserModal'
+import defaultAvatar from '@/assets/logo.jpg'
 import './index.scss';
 const { Meta } = Card;
 
@@ -67,7 +68,7 @@ const MyBlog: React.FC = () => {
                                             <Card
                                                 key={article.id}
                                                 title={article.title}
-                                                extra={moment(article.currentime).format('YYYY-MM-DD HH:mm:ss')}
+                                                extra={dayjs(article.currentime).format('YYYY-MM-DD HH:mm:ss')}
                                                 style={{ width: '100%', marginBottom: 8, cursor: 'pointer' }}
 
 
@@ -151,18 +152,18 @@ const MyBlog: React.FC = () => {
 
                             >
                                 <Meta
-                                    avatar={<Avatar src={userStore.userInfo.image} />}
+                                    avatar={<Avatar src={userStore.userInfo.image?userStore.userInfo.image:defaultAvatar} />}
                                     title={userStore.userInfo.username}
-                                    description={userStore.userInfo.information}
+                                    description={`个人简介：${userStore.userInfo.information}`}
                                 />
                                 <Row style={{ marginTop: 10 }}>
                                     <Col span={20} style={{ textAlign: 'left', marginLeft: 48, color: 'rgba(0, 0, 0, 0.45)' }}>
-                                        {userStore.userInfo.job}
+                                       从事行业： {userStore.userInfo.job}
                                     </Col>
                                 </Row>
                                 <Row style={{ marginTop: 10 }}>
                                     <Col span={20} style={{ textAlign: 'left', marginLeft: 48, color: 'rgba(0, 0, 0, 0.45)' }}>
-                                        {userStore.userInfo.location}
+                                      地区：  {userStore.userInfo.location}
 
                                     </Col>
                                 </Row>

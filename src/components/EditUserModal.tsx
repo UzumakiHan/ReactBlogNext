@@ -10,13 +10,14 @@ const EditUserModal:React.FC<{editModal:boolean,handleCancel:(flag:boolean)=>voi
     const [filePath, setFilePath] = useState<string>('');
 
     const handleChangeUserInfo = () => {
-        const username = userForm.current.getFieldValue('username');
-        const realname = userForm.current.getFieldValue('realname');
-        const job = userForm.current.getFieldValue('job');
-        const sex = userForm.current.getFieldValue('sex');
-        const location = userForm.current.getFieldValue('location');
-        const birthday = userForm.current.getFieldValue('birthday');
-        const information = userForm.current.getFieldValue('information');
+        const username = userForm.current.getFieldValue('username') || '';
+        const realname = userForm.current.getFieldValue('realname') || '';
+        const job = userForm.current.getFieldValue('job') || ''; 
+        console.log(realname)
+        const sex = userForm.current.getFieldValue('sex') || '';
+        const location = userForm.current.getFieldValue('location') || '';
+        const birthday = userForm.current.getFieldValue('birthday') || '';
+        const information = userForm.current.getFieldValue('information') || '';
         const id = userStore.userInfo.id;
         userStore.changeUserInfo(id,username,birthday,location,information,realname,job,sex,avatarUrl,filePath)
         handleCancel();
